@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weather App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav>
+
+    <div id="navbar-left">
+      <a href="index.html">Home</a>
+      <a href="weather.html">Weather</a>
+      <a href="about.html">About</a>
+      <a href="developer.html">Developer</a>
+      <a href="feedback.html">Feedback</a>
+      <a href="history.html">History</a>
+      <a href="login-register.html">Login/Register</a> <!-- Updated link -->
+    </div>
+
+    <div id="navbar-user-info">
+      <img id="profile-pic" class="profile-pic" src="profile-2398783_1280.webp" alt="Profile Picture" />
+      <span id="username" class="username">User  Name</span>
+      <a href="login-register.html" id="logout-link">Log Out</a>
+  </div>
+  </nav>
+
+  <div id="weather-container">
+    <h2>Current Weather</h2>
+    <input type="text" id="city-input" placeholder="Enter City Name" />
+    <button onclick="redirectToWeatherResult()">Search</button>
+  </div>
+
+  <script>
+    // Log out logic
+    document.getElementById('logout-link').addEventListener('click', function(e) {
+      e.preventDefault();
+      localStorage.removeItem('user');
+      window.location.href = 'index.html';
+    });
+
+    // Search Redirect Logic
+    function redirectToWeatherResult() {
+      const city = document.getElementById('city-input').value.trim();
+      if (city !== '') {
+        window.location.href = `weatherResults.html?city=${encodeURIComponent(city)}`;
+      } else {
+        alert('Please enter a city name!');
+      }
+    }
+  </script>
+
+</body>
+</html>

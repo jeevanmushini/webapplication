@@ -1,0 +1,205 @@
+/* Apply font to all elements */
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+body {
+    background: #8059cd; /* Main background color */
+    margin: 0;
+    color: white; /* Default text color */
+}
+
+/* Navigation Bar */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: black; /* Background color for navbar */
+    padding: 10px 20px;
+}
+
+nav a {
+    margin: 0 30px; /* Increased space between links */
+    text-decoration: none;
+    color: white; /* Default link color */
+    font-size: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+nav a:hover {
+    text-decoration: none; /* Remove underline */
+    color: #8a2be2; /* Light purple color on hover */
+    position: relative;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: #8a2be2; /* Light purple underline */
+    bottom: 0;
+    left: 0;
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out;
+}
+
+nav a:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+/* User Info in Navbar */
+#navbar-user-info {
+    display: flex;
+    align-items: center;
+    padding: 10px; /* Add padding for better spacing */
+    border-radius: 5px; /* Rounded corners */
+}
+
+#navbar-user-info .profile-pic {
+    width: 50px; /* Increased size for better visibility */
+    height: 50px;
+    border-radius: 50%; /* Circular profile picture */
+    margin-right: 10px;
+    border: 2px solid #debff4; /* Light purple border */
+    transition: transform 0.3s; /* Smooth hover effect */
+}
+
+#navbar-user-info .profile-pic:hover {
+    transform: scale(1.1); /* Slightly enlarge on hover */
+}
+
+#navbar-user-info .username {
+    font-size: 16px;
+    margin-right: 10px;
+    color: white; /* Ensure text color is white */
+}
+
+/* Logout Link */
+#logout-link {
+    background-color: #8059cd; /* Set background color to theme color */
+    color: white; /* Set text color to white */
+    padding: 5px 10px; /* Add padding for better appearance */
+    border-radius: 5px; /* Rounded corners */
+    text-decoration: none; /* Remove underline */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+#logout-link:hover {
+    background-color: #8b48d7; /* Darker shade on hover */
+}
+
+/* Special color for login and register */
+#login-section, #register-section {
+    background: #5d3fd3; /* Light purple background for login/register */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2, h3 {
+    text-align: center;
+    color: #fff; /* Heading color */
+}
+
+/* Weather Search Section */
+#weather-container {
+    background: rgba(255, 255, 255, 0.3);
+    max-width: 500px;
+    padding: 30px;
+    border-radius: 15px;
+    margin: 20px auto;
+    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    transition: height 0.3s ease;
+}
+
+#weather-container:hover {
+    height: 600px; /* Makes the weather div taller on hover */
+}
+
+#weather-icon {
+    width: 100px;
+    height: 100px;
+    display: block;
+    margin: 0 auto;
+}
+
+#temp-div, #weather-info {
+    font-size: 1.5em;
+    margin-top: 10px;
+}
+
+button {
+    background: #debff4; /* Button background color */
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background: #8b48d7; /* Darker button color on hover */
+}
+
+#weather-logs {
+    margin-top: 20px;
+    font-size: 1.1em;
+    text-align: left;
+}
+
+input[type="text"], input[type="password"] {
+    padding: 10px;
+    font-size: 1.2em;
+    width: 70%;
+    border-radius: 5px;
+    border: none;
+    margin-bottom: 15px;
+    background-color: rgba(255, 255, 255, 0.2); /* Match the theme */
+    color: white; /* Input text color */
+}
+
+/* Hourly forecast grid layout */
+#hourly-forecast {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Flexible grid layout */
+    gap: 20px; /* Increased gap between forecast items */
+    margin-top: 20px;
+    padding: 15px;
+}
+
+.forecast-item {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.forecast-item:hover {
+    transform: translateY(-10px); /* Hover effect for slight lift */
+}
+
+.forecast-item img {
+    width: 50px;
+    height: 50px;
+    margin-top: 10px;
+}
+
+.forecast-item p {
+    margin: 5px 0;
+    font-size: 1rem;
+}
+
+.forecast-item h3 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    font-weight: bold;
+}

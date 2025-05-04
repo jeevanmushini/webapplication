@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login/Register</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Add custom styles for the form */
+    body {
+      background: #8059cd; /* Match the background color of the webpage */
+      color: white; /* Set text color to white */
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Match font */
+    }
+    #form-container {
+      max-width: 400px;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+    }
+    h2 {
+      text-align: center;
+      color: white; /* Set heading color to white */
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: rgba(255, 255, 255, 0.2); /* Match the theme */
+      color: white; /* Set input text color to white */
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #debff4; /* Match button color to theme */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #8b48d7; /* Darker shade on hover */
+    }
+    #welcome-message {
+      text-align: center;
+      color: green;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div id="navbar-left">
+      <a href="index.html">Home</a>
+      <a href="weather.html">Weather</a>
+      <a href="about.html">About</a>
+      <a href="developer.html">Developer</a>
+      <a href="feedback.html">Feedback</a>
+      <a href="history.html">History</a>
+    </div>
+
+    <div id="navbar-user-info">
+      <img id="profile-pic" class="profile-pic" src="profile-2398783_1280.webp" alt="Profile Picture" />
+      <span id="username" class="username"></span>
+      <a href="#" id="logout-link" style="display: none;">Log Out</a>
+    </div>
+  </nav>
+
+  <div id="form-container">
+    <h2 id="form-title">Login</h2>
+    <form id="login-form">
+      <input type="text" id="username-input" placeholder="Username" required />
+      <input type="password" id="password-input" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="#" id="show-register" style="color: #debff4;">Register here</a></p>
+
+    <form id="register-form" style="display: none;">
+      <h2>Register</h2>
+      <input type="text" id="new-username-input" placeholder="Username" required />
+      <input type="password" id="new-password-input" placeholder="Password" required />
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <div id="welcome-message" style="display: none;"></div>
+
+  <script>
+    // Check if user is logged in
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      document.getElementById('form-container').style.display = 'none'; // Hide forms
+      document.getElementById('welcome-message').textContent = `Welcome back, ${user.username}!`;
+      document.getElementById('welcome-message').style.display = 'block'; // Show welcome message
+      document.getElementById('logout-link').style.display = 'block'; // Show logout link
+    }
+
+    // Show/hide forms
+    document.getElementById('show-register').addEventListener('click', function(e) {
+      e.preventDefault();
+      document.getElementById('login-form').style.display = 'none';
+      document.getElementById('register-form').style.display = 'block';
+      document.getElementById('form-title').textContent = 'Register';
+    });
+
+    // Handle login
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const username = document.getElementById('username-input').value;
+      const password = document.getElementById('password-input').value;
+
+      // Simulate login (replace with actual authentication logic)
+      const user = { username: username, password: password };
+      localStorage.setItem('user', JSON.stringify(user));
+      window.location.href = 'index.html'; // Redirect to home page
+    });
+
+    // Handle registration
+    document.getElementById('register-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const newUsername = document.getElementById('new-username-input').value;
+      const newPassword = document.getElementById('new-password-input').value;
+
+      // Simulate registration (replace with actual registration logic)
+      const newUser   = { username: newUsername, password: newPassword };
+      localStorage.setItem('user', JSON.stringify(newUser ));
+      alert('Registration successful! You can now log in.');
+      document.getElementById('register-form').style.display = 'none';
+      document.getElementById('login-form').style.display = 'block';
+      document.getElementById('form-title').textContent = 'Login';
+    });
+
+    // Logout Logic
+    document.getElementById('logout-link').addEventListener('click', function(e) {
+      e.preventDefault();
+      localStorage.removeItem('user');
+      window.location.href = 'login-register.html'; // Redirect to login/register page
+    });
+  </script>
+
+</body>
+</html>
