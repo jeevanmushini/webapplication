@@ -8,29 +8,56 @@
 </head>
 <body>
     <nav>
-
         <div id="navbar-left">
-          <a href="index.html">Home</a>
-          <a href="weather.html">Weather</a>
-          <a href="about.html">About</a>
-          <a href="developer.html">Developer</a>
-          <a href="feedback.html">Feedback</a>
-          <a href="history.html">History</a>
-          <a href="login-register.html">Login/Register</a> <!-- Updated link -->
+            <a href="index.html">Home</a>
+            <a href="weather.html">Weather</a>
+            <a href="about.html">About</a>
+            <a href="developer.html">Developer</a>
+            <a href="feedback.html">Feedback</a>
+            <a href="history.html">History</a>
         </div>
     
         <div id="navbar-user-info">
-          <img id="profile-pic" class="profile-pic" src="profile-2398783_1280.webp" alt="Profile Picture" />
-          <span id="username" class="username">User  Name</span>
-          <a href="login-register.html" id="logout-link">Log Out</a>
-      </div>
-      </nav>
+            <img id="profile-pic" class="profile-pic" src="profile-2398783_1280.webp" alt="Profile Picture" />
+            <span id="username" class="username">User Name</span>
+            <a href="login-register.html" id="logout-link">Log Out</a>
+        </div>
+    </nav>
 
     <div id="developer-container">
         <h1>Developer Info</h1>
-        <p>This Weather App was created by [Your Name], a passionate developer focused on making useful tools for the world.</p>
+        <p>This Weather App was created by a team of passionate developers who are dedicated to creating useful and innovative tools. Here are the developers behind this project:</p>
+        
+        <div class="developer-profile">
+            <h2>Lakshmi Manikanta</h2>
+            <p>Lakshmi is a highly skilled developer with a focus on backend technologies. With a strong understanding of algorithms and data structures, Lakshmi has contributed to the server-side logic of the Weather App, ensuring smooth performance and functionality.</p>
+        </div>
+        
+        <div class="developer-profile">
+            <h2>Malli</h2>
+            <p>Malli is a frontend developer with expertise in designing intuitive user interfaces. With a passion for creating seamless user experiences, Malli has designed the clean, modern interface for the Weather App, ensuring it's both beautiful and user-friendly.</p>
+        </div>
+
+        <div class="developer-profile">
+            <h2>Raja</h2>
+            <p>Raja is a full-stack developer who brings together both frontend and backend development skills. Raja has worked on integrating various weather data APIs and optimizing the app’s functionality across different devices and platforms.</p>
+        </div>
+
+        <div class="developer-profile">
+            <h2>Jeevan</h2>
+            <p>Jeevan is a frontend developer who focuses on creating responsive and dynamic web pages. Jeevan has worked on building interactive components of the Weather App and optimizing its performance for a seamless experience across all devices.</p>
+        </div>
     </div>
 
     <script src="script.js"></script>
+    <script>
+         window.onload = function() {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user) {
+        document.getElementById('username').textContent = user.username;
+        document.getElementById('logout-link').style.display = 'block'; // Show logout link
+      }
+    };
+    </script>
 </body>
 </html>

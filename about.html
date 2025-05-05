@@ -8,29 +8,56 @@
 </head>
 <body>
     <nav>
-
         <div id="navbar-left">
-          <a href="index.html">Home</a>
-          <a href="weather.html">Weather</a>
-          <a href="about.html">About</a>
-          <a href="developer.html">Developer</a>
-          <a href="feedback.html">Feedback</a>
-          <a href="history.html">History</a>
-          <a href="login-register.html">Login/Register</a> <!-- Updated link -->
+            <a href="index.html">Home</a>
+            <a href="weather.html">Weather</a>
+            <a href="about.html">About</a>
+            <a href="developer.html">Developer</a>
+            <a href="feedback.html">Feedback</a>
+            <a href="history.html">History</a>
         </div>
-    
+
         <div id="navbar-user-info">
-          <img id="profile-pic" class="profile-pic" src="profile-2398783_1280.webp" alt="Profile Picture" />
-          <span id="username" class="username">User  Name</span>
-          <a href="login-register.html" id="logout-link">Log Out</a>
-      </div>
-      </nav>
+            <img id="profile-pic" class="profile-pic" src="profile-2398783_1280.webp" alt="Profile Picture" />
+            <span id="username" class="username">User Name</span>
+            <a href="login-register.html" id="logout-link">Log Out</a>
+        </div>
+    </nav>
 
     <div id="about-container">
         <h1>About Weather App</h1>
         <p>Welcome to the Weather App! This app provides weather updates and forecasts for any city around the world.</p>
+        
+        <h2>Core Features:</h2>
+        <ul>
+            <li><strong>Navigation Bar:</strong> Easy access to home, weather updates, developer info, and more.</li>
+            <li><strong>Weather Information:</strong> Get current weather details such as temperature, description, and icons.</li>
+            <li><strong>Hourly Forecast:</strong> 24-hour forecast with temperature and weather updates for each hour.</li>
+            <li><strong>Dynamic Weather Icons:</strong> Visual representation of weather conditions using icons from OpenWeatherMap.</li>
+            <li><strong>User Profile Section:</strong> View and update user profile picture, username, and log out option.</li>
+            <li><strong>About Section:</strong> Learn more about the app’s functionality and features.</li>
+        </ul>
+        
+        <h2>How It Works:</h2>
+        <p>The Weather App fetches data from the OpenWeatherMap API to provide accurate weather updates. The app uses async JavaScript to handle real-time data fetching, ensuring a smooth user experience. Users can search for a city and instantly receive weather details and forecasts for the next 24 hours.</p>
+
+        <h2>Technologies Used:</h2>
+        <ul>
+            <li><strong>HTML</strong>: Structure and content of the app.</li>
+            <li><strong>CSS</strong>: Styling to make the app visually appealing and user-friendly.</li>
+            <li><strong>JavaScript</strong>: Logic to fetch weather data and dynamically display it.</li>
+            <li><strong>OpenWeatherMap API</strong>: Provides real-time weather data and forecasts.</li>
+        </ul>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js">
+    </script>
+    <script> window.onload = function() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+          document.getElementById('username').textContent = user.username;
+          document.getElementById('logout-link').style.display = 'block'; // Show logout link
+        }
+      };</script>
 </body>
 </html>

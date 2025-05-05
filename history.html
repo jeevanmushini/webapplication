@@ -3,37 +3,138 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Weather App</title>
+  <title>Weather History</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Styling the History Container */
+    #history-container {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    #history-list {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .history-item {
+      background-color: rgba(255, 255, 255, 0.3);
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .history-item strong {
+      color: #333;
+    }
+
+    .history-item p {
+      margin: 5px 0;
+      color: #555;
+    }
+
+    /* Clear Button Styling */
+    #clear-history-btn {
+      background-color: #ff4444;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 20px 0;
+      font-size: 1.1em;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    #clear-history-btn:hover {
+      background-color: #ff2222;
+    }
+  </style>
 </head>
 <body>
+  <button onclick="goBack()" style="
+  font-size: 1.2rem; 
+  padding: 10px 20px; 
+  margin: 20px; 
+  border: none; 
+  border-radius: 8px; 
+  background-color: #2d2e2f; 
+  color: white; 
+  cursor: pointer;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+">
+  ← Back
+</button>
 
-  <nav>
 
-    <div id="navbar-left">
-      <a href="index.html">Home</a>
-      <a href="weather.html">Weather</a>
-      <a href="about.html">About</a>
-      <a href="developer.html">Developer</a>
-      <a href="feedback.html">Feedback</a>
-      <a href="history.html">History</a>
-      <a href="login-register.html">Login/Register</a> <!-- Updated link -->
-    </div>
+  <h1>Weather History</h1>
 
-    <div id="navbar-user-info">
-      <img id="profile-pic" class="profile-pic" src="profile-2398783_1280.webp" alt="Profile Picture" />
-      <span id="username" class="username">User  Name</span>
-      <a href="login-register.html" id="logout-link">Log Out</a>
+  <!-- History Container -->
+  <div id="history-container">
+    <ul id="history-list">
+      <!-- History entries will be dynamically added here -->
+    </ul>
+    
+    <!-- Clear History Button -->
+    <button id="clear-history-btn">Clear History</button>
   </div>
-  </nav>
 
   <script>
-    // Logout Logic
-    document.getElementById('logout-link').addEventListener('click', function(e) {
-      e.preventDefault();
-      localStorage.removeItem('user');
-      window.location.href = 'index.html';
+    // Get the history from localStorage
+    const historyList = document.getElementById('history-list');
+    const clearHistoryButton = document.getElementById('clear-history-btn');
+    
+    function loadHistory() {
+      const history = JSON.parse(localStorage.getItem('history')) || [];
+
+      // Clear current history list
+      historyList.innerHTML = '';
+
+      if (history.length === 0) {
+        historyList.innerHTML = "<li>No weather history available.</li>";  // Show message if no history
+      } else {
+        // Loop through each history entry and display it
+        history.forEach(entry => {
+          const li = document.createElement('li');
+          li.classList.add('history-item'); // Add class for styling
+
+          // Display the weather data correctly
+          li.innerHTML = `
+            <strong>Location:</strong> ${entry.location}<br>
+            <strong>Weather:</strong> ${entry.weather}<br>
+            <strong>Temperature:</strong> ${entry.temp}°C<br>
+            <img src="https://openweathermap.org/img/wn/${entry.icon}.png" alt="Weather Icon">
+          `;
+          historyList.appendChild(li);
+        });
+      }
+    }
+
+    // Event listener for the Clear History button
+    clearHistoryButton.addEventListener('click', () => {
+      // Clear the history from localStorage
+      localStorage.removeItem('history');
+      
+      // Reload the history list to reflect the changes
+      loadHistory();
     });
+
+    // Load history when the page is loaded
+    window.onload = loadHistory;
+    function goBack() {
+    window.history.back();
+}
   </script>
+
 </body>
 </html>

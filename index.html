@@ -6,21 +6,128 @@
   <title>Weather App</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* Add custom styles for the welcome message */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #8059cd;
+      color: white;
+    }
+
+    #navbar-user-info {
+      display: flex;
+      align-items: center;
+    }
+
+    .profile-pic {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .username {
+      margin-right: 15px;
+    }
+
+    #logout-link {
+      color: white;
+      text-decoration: none;
+    }
+
     #welcome-message {
-      font-size: 4em; /* Increased size */
+      font-size: 4em;
       text-align: center;
       margin: 20px 0;
-      color: white; /* Changed color to white */
-      padding: 20px; /* Optional: Add padding for better appearance */
+      padding: 20px;
+      color: white;
+    }
+
+    #weather-sections {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .weather-section {
+      border-radius: 10px;
+      text-align: center;
+      padding: 20px;
+      height: 500px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .weather-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .weathername {
+      font-size: 2em;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .weatherdescription {
+      font-size: 1.5em;
+      color: white;
+      flex-grow: 1;
+    }
+
+    .weather-section.sunny,
+    .weather-section.rainy,
+    .weather-section.cloudy,
+    .weather-section.snowy,
+    .weather-section.stormy {
+      background-color: rgba(255, 255, 255, 0.3);
+      color: white;
+    }
+
+    footer {
+      background-color: black;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+      font-size: 1em;
+    }
+
+    footer a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    nav {
+      background-color: #0b0b0b;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
   </style>
+
+  <!-- 🔐 Redirect to login if not authenticated -->
+  <script>
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+      window.location.href = 'login.html';
+    }
+  </script>
 </head>
 <body>
 
   <!-- Navigation Bar -->
   <nav>
-
     <div id="navbar-left">
       <a href="index.html">Home</a>
       <a href="weather.html">Weather</a>
@@ -28,36 +135,74 @@
       <a href="developer.html">Developer</a>
       <a href="feedback.html">Feedback</a>
       <a href="history.html">History</a>
-      <a href="login-register.html">Login/Register</a> <!-- Updated link -->
     </div>
 
     <div id="navbar-user-info">
       <img id="profile-pic" class="profile-pic" src="profile-2398783_1280.webp" alt="Profile Picture" />
-      <span id="username" class="username">User  Name</span>
-      <a href="login-register.html" id="logout-link">Log Out</a>
-  </div>
+      <span id="username" class="username">User Name</span>
+      <a href="#" id="logout-link">Log Out</a>
+    </div>
   </nav>
 
   <!-- Welcome Message -->
   <h1 id="welcome-message">Welcome to our web application</h1>
 
-  <script>
-    // Logout Logic
-    document.getElementById('logout-link').addEventListener('click', function(e) {
-      e.preventDefault();
-      localStorage.removeItem('user');
-      window.location.href = 'login-register.html'; // Redirect to login/register page
-    });
+  <!-- Weather Sections -->
+  <div id="weather-sections">
+    <section class="weather-section sunny">
+      <img src="sunny2.jpg" alt="Sunny Weather" class="weather-image">
+      <h2 class="weathername">Sunny Weather</h2>
+      <p class="weatherdescription">A bright and sunny day! Perfect weather to step outside and enjoy some fresh air. Make sure to stay hydrated and wear sunscreen.</p>
+    </section>
 
-    // Display logged-in user's username and profile pic
-    window.onload = function() {
+    <section class="weather-section rainy">
+      <img src="rainy.jpg" alt="Rainy Weather" class="weather-image">
+      <h2 class="weathername">Rainy Weather</h2>
+      <p class="weatherdescription">Rainy days bring a fresh, clean atmosphere. Don't forget your umbrella and enjoy the peaceful sound of raindrops.</p>
+    </section>
+
+    <section class="weather-section cloudy">
+      <img src="cloudy.jpg" alt="Cloudy Weather" class="weather-image">
+      <h2 class="weathername">Cloudy Weather</h2>
+      <p class="weatherdescription">Cloudy skies can often bring a sense of calm. Perfect for a relaxing indoor day with a hot cup of coffee.</p>
+    </section>
+
+    <section class="weather-section snowy">
+      <img src="snowy.jpg" alt="Snowy Weather" class="weather-image">
+      <h2 class="weathername">Snowy Weather</h2>
+      <p class="weatherdescription">A snowy day adds a magical touch to the landscape. Make sure to bundle up and stay warm while enjoying the serene beauty.</p>
+    </section>
+
+    <section class="weather-section stormy">
+      <img src="stormy.jpg" alt="Stormy Weather" class="weather-image">
+      <h2 class="weathername">Stormy Weather</h2>
+      <p class="weatherdescription">A storm is brewing. It's best to stay indoors and stay safe during these intense weather conditions.</p>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 WeatherApp. All rights reserved.</p>
+    <p>Designed by Manikanta | <a href="about.html">About Us</a> | <a href="feedback.html">Feedback</a></p>
+  </footer>
+
+  <!-- JavaScript for user handling -->
+  <script>
+    window.onload = function () {
       const user = JSON.parse(localStorage.getItem('user'));
       if (user) {
         document.getElementById('username').textContent = user.username;
-        document.getElementById('profile-pic').src = user.profilePic || 'default-profile-pic.png';  // Default profile pic if not set
-        document.getElementById('logout-link').style.display = 'block'; // Show logout link
+        document.getElementById('logout-link').style.display = 'inline';
+        document.getElementById('login-link').style.display = 'none';
+        document.getElementById('register-link').style.display = 'none';
       }
     };
+
+    document.getElementById('logout-link').addEventListener('click', function (e) {
+      e.preventDefault();
+      localStorage.removeItem('user');
+      window.location.href = 'login.html';
+    });
   </script>
 
 </body>

@@ -5,15 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Results</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+    </style>
 </head>
 <body>
+    <button onclick="goBack()" style="
+    font-size: 1.2rem; 
+    padding: 10px 20px; 
+    margin: 20px; 
+    border: none; 
+    border-radius: 8px; 
+    background-color: #2d2e2f; 
+    color: white; 
+    cursor: pointer;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+    ">
+    ← Back
+    </button>
+
     <h1>Weather Details</h1>
     <div id="weather-info"></div>
     <div id="temp-div"></div>
     <img id="weather-icon" alt="Weather Icon">
     <div id="hourly-forecast"></div>
 
-    <!-- JavaScript code here -->
+    <!-- Button to go to suggestions page -->
+    <button onclick="goToSuggestionsPage()" style="
+    font-size: 1.2rem; 
+    padding: 10px 20px; 
+    margin: 20px; 
+    border: none; 
+    border-radius: 8px; 
+    background-color: #2d2e2f; 
+    color: white; 
+    cursor: pointer;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+    ">
+    View Music and Movie Suggestions
+    </button>
+
     <script>
         const apiKey = '8a3aafa5bcc20123b98baae6d42fc473'; // Replace with your OpenWeatherMap API key
 
@@ -28,11 +58,12 @@
                 const data = await response.json();
                 if (data.cod === 200) {
                     displayWeather(data);
+                    saveWeatherHistory(city, data); // Save the weather history
                 } else {
                     alert('City not found!');
                 }
 
-                // Fetch forecast data
+                // Fetch forecast data (for hourly forecast purposes only)
                 const forecastResponse = await fetch(forecastUrl);
                 const forecastData = await forecastResponse.json();
                 displayHourlyForecast(forecastData.list);
@@ -80,6 +111,21 @@
             });
         }
 
+        // Save weather data to localStorage (current weather only)
+        async function saveWeatherHistory(city, data) {
+            const weatherEntry = {
+                location: city,
+                weather: data.weather[0].description,
+                temp: data.main.temp,
+                icon: data.weather[0].icon,
+            };
+
+            const history = JSON.parse(localStorage.getItem('history')) || [];
+            history.push(weatherEntry);
+            localStorage.setItem('history', JSON.stringify(history));
+            alert('Weather history saved successfully!');
+        }
+
         // Fetch the city from the URL and load the weather data
         window.addEventListener('load', () => {
             const urlParams = new URLSearchParams(window.location.search);
@@ -88,6 +134,21 @@
                 fetchWeather(city); // Call fetchWeather with the city from the query string
             }
         });
+
+        // Go back function for the button
+        function goBack() {
+            window.history.back();
+        }
+
+        // Navigate to suggestions page
+        function goToSuggestionsPage() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const city = urlParams.get('city');
+            if (city) {
+                window.location.href = `suggestions.html?city=${city}`;  // Pass city as a query parameter
+            }
+        }
+
     </script>
 </body>
 </html>

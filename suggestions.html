@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music & Movie Suggestions</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .suggestions {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .suggestions div {
+            width: 45%;
+        }
+
+        .suggestions h2 {
+            text-align: center;
+        }
+
+        .suggestions ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .suggestions ul li {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        .back-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            background-color: #2d2e2f;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-btn" onclick="window.location.href='weather_results.html'">← Back to Weather</button>
+        <h1>Suggestions Based on Your Weather</h1>
+
+        <div class="suggestions">
+            <!-- Music Suggestions -->
+            <div>
+                <h2>Music Suggestions</h2>
+                <ul id="music-suggestions">
+                    <!-- Music suggestions will be added here -->
+                </ul>
+            </div>
+
+            <!-- Movie Suggestions -->
+            <div>
+                <h2>Movie Suggestions</h2>
+                <ul id="movie-suggestions">
+                    <!-- Movie suggestions will be added here -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to fetch music based on the weather mood
+        async function fetchMusic(suggestion) {
+            const res = await fetch(`https://api.deezer.com/search?q=${suggestion}`);
+            const data = await res.json();
+            const musicList = document.getElementById('music-suggestions');
+            data.data.slice(0, 5).forEach(song => {
+                const li = document.createElement('li');
+                li.innerHTML = `${song.title} by ${song.artist.name}`;
+                musicList.appendChild(li);
+            });
+        }
+
+        // Function to fetch movie suggestions based on weather mood
+        async function fetchMovies(suggestion) {
+            const apiKey = 'YOUR_TMDB_API_KEY';
+            const res = await fetch(`https://api.themoviedb.org/3/search/movie?query=${suggestion}&api_key=${apiKey}`);
+            const data = await res.json();
+            const movieList = document.getElementById('movie-suggestions');
+            data.results.slice(0, 5).forEach(movie => {
+                const li = document.createElement('li');
+                li.innerHTML = `${movie.title}`;
+                movieList.appendChild(li);
+            });
+        }
+
+        // Fetch music and movie suggestions based on weather conditions (e.g., "rain", "sunny", etc.)
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const weatherCondition = urlParams.get('weatherCondition') || 'sunny'; // Default to sunny
+            fetchMusic(weatherCondition);
+            fetchMovies(weatherCondition);
+        };
+    </script>
+</body>
+</html>
