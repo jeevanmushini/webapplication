@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Developer - Weather App</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: url('developer2.webp') no-repeat center center fixed;
+        background-size: cover;
+        color: white; 
+        text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+    }
+</style>
 </head>
 <body>
     <nav>
@@ -30,7 +40,7 @@
         
         <div class="developer-profile">
             <h2>Lakshmi Manikanta</h2>
-            <p>Lakshmi is a highly skilled developer with a focus on backend technologies. With a strong understanding of algorithms and data structures, Lakshmi has contributed to the server-side logic of the Weather App, ensuring smooth performance and functionality.</p>
+            <p>Lakshmi Manikanta is a highly skilled developer with a focus on backend technologies. With a strong understanding of algorithms and data structures, Lakshmi has contributed to the server-side logic of the Weather App, ensuring smooth performance and functionality.</p>
         </div>
         
         <div class="developer-profile">
@@ -55,7 +65,7 @@
       const user = JSON.parse(localStorage.getItem('user'));
       if (user) {
         document.getElementById('username').textContent = user.username;
-        document.getElementById('logout-link').style.display = 'block'; // Show logout link
+        document.getElementById('logout-link').style.display = 'block'; 
       }
     };
     </script>

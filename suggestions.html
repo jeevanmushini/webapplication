@@ -3,52 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music & Movie Suggestions</title>
+    <title>Music, Movie, and Food Suggestions</title>
     <link rel="stylesheet" href="style.css">
     <style>
+          body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: url('suggestions.png') no-repeat center center fixed;
+  background-size: cover;
+  color: white;
+  min-height: 100vh;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+}
         body {
             font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
             margin: 0;
             padding: 0;
+            height: 100%; /* Ensures full height for the body */
         }
 
         .container {
-            width: 80%;
+            width: 90%; /* Increase width to 90% of the screen */
             margin: 0 auto;
-            padding: 20px;
+            padding: 40px;
+            min-height: 100vh; /* Ensure the container takes up at least the full height of the screen */
+            box-sizing: border-box; /* To ensure padding is included in the width calculation */
         }
 
         h1 {
             text-align: center;
-            font-size: 2rem;
-            margin-bottom: 20px;
+            font-size: 2.5rem; /* Increased font size */
+            margin-bottom: 30px;
+            color: white;
         }
 
         .suggestions {
             display: flex;
             justify-content: space-around;
-            margin-bottom: 20px;
+            flex-wrap: wrap; /* Allows the suggestions to stack on smaller screens */
+            margin-bottom: 30px;
         }
 
         .suggestions div {
-            width: 45%;
+            width: 30%; /* Reduced width to allow more space for content */
+            padding: 10px;
         }
 
         .suggestions h2 {
             text-align: center;
+            font-size: 1.8rem;
+            color: white;
         }
 
         .suggestions ul {
             list-style-type: none;
             padding: 0;
+            text-align: center; /* Center the links */
         }
 
         .suggestions ul li {
             padding: 8px;
-            margin: 5px 0;
+            margin: 8px 0;
             background-color: rgba(0, 0, 0, 0.1);
             border-radius: 5px;
+        }
+
+        /* Style for the links */
+        .suggestions ul li a {
+            color: white; /* Set link color to white */
+            text-decoration: none; /* Remove the underline */
+            font-weight: bold; /* Optional: make the text bold */
+        }
+
+        /* Hover effect for the links */
+        .suggestions ul li a:hover {
+            color: #ffcc00; /* Optional: change color on hover */
         }
 
         .back-btn {
@@ -56,11 +85,18 @@
             margin: 20px auto;
             padding: 10px 20px;
             font-size: 1.2rem;
-            background-color: #2d2e2f;
+            background-color: rgba(255, 255, 255, 0.3);
             color: white;
             border: none;
             border-radius: 8px;
             cursor: pointer;
+        }
+
+        /* Responsive Design: On smaller screens, stack the suggestions */
+        @media (max-width: 768px) {
+            .suggestions div {
+                width: 100%; /* Stack the suggestions vertically on smaller screens */
+            }
         }
     </style>
 </head>
@@ -85,41 +121,102 @@
                     <!-- Movie suggestions will be added here -->
                 </ul>
             </div>
+
+            <!-- Food Suggestions -->
+            <div>
+                <h2>Food Suggestions</h2>
+                <ul id="food-suggestions">
+                    <!-- Food suggestions will be added here -->
+                </ul>
+            </div>
         </div>
     </div>
 
     <script>
-        // Function to fetch music based on the weather mood
+        // Function to fetch music based on the weather mood using Last.fm API
         async function fetchMusic(suggestion) {
-            const res = await fetch(`https://api.deezer.com/search?q=${suggestion}`);
+            const apiKey = '63faf4cbaa3dd454922aa9cc93b66205';  // Your Last.fm API key
+            const res = await fetch(`https://ws.audioscrobbler.com/2.0/?method=track.search&track=${suggestion}&api_key=${apiKey}&format=json`);
             const data = await res.json();
             const musicList = document.getElementById('music-suggestions');
-            data.data.slice(0, 5).forEach(song => {
+
+            if (data.results && data.results.trackmatches.track.length > 0) {
+                data.results.trackmatches.track.slice(0, 5).forEach(song => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<a href="${song.url}" target="_blank">${song.name} by ${song.artist}</a>`;
+                    musicList.appendChild(li);
+                });
+            } else {
                 const li = document.createElement('li');
-                li.innerHTML = `${song.title} by ${song.artist.name}`;
+                li.innerHTML = 'No music found based on the weather condition.';
                 musicList.appendChild(li);
-            });
+            }
         }
 
-        // Function to fetch movie suggestions based on weather mood
+        // Function to fetch movie suggestions based on weather mood using OMDb API
         async function fetchMovies(suggestion) {
-            const apiKey = 'YOUR_TMDB_API_KEY';
-            const res = await fetch(`https://api.themoviedb.org/3/search/movie?query=${suggestion}&api_key=${apiKey}`);
+            const apiKey = '6f27749f';  // Your OMDb API key
+            const res = await fetch(`https://www.omdbapi.com/?s=${suggestion}&apikey=${apiKey}`);
             const data = await res.json();
             const movieList = document.getElementById('movie-suggestions');
-            data.results.slice(0, 5).forEach(movie => {
+
+            if (data.Response === 'True' && data.Search) {
+                data.Search.slice(0, 5).forEach(movie => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<a href="https://www.imdb.com/title/${movie.imdbID}/" target="_blank">${movie.Title} (${movie.Year})</a>`;
+                    movieList.appendChild(li);
+                });
+            } else {
                 const li = document.createElement('li');
-                li.innerHTML = `${movie.title}`;
+                li.innerHTML = 'No movies found based on the weather condition.';
                 movieList.appendChild(li);
-            });
+            }
         }
 
-        // Fetch music and movie suggestions based on weather conditions (e.g., "rain", "sunny", etc.)
+        // Function to fetch food suggestions based on weather using TheMealDB API
+        async function fetchFood(suggestion) {
+            let searchQuery = '';
+            switch (suggestion.toLowerCase()) {
+                case 'sunny':
+                    searchQuery = 'salad';  // Sunny weather, suggest salads
+                    break;
+                case 'rainy':
+                    searchQuery = 'soup';   // Rainy weather, suggest soups
+                    break;
+                case 'cold':
+                    searchQuery = 'stew';   // Cold weather, suggest stews
+                    break;
+                case 'hot':
+                    searchQuery = 'ice cream'; // Hot weather, suggest ice cream
+                    break;
+                default:
+                    searchQuery = 'meal';   // Default to general meal search
+            }
+
+            const res = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchQuery}`);
+            const data = await res.json();
+            const foodList = document.getElementById('food-suggestions');
+
+            if (data.meals) {
+                data.meals.slice(0, 5).forEach(meal => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<a href="${meal.strSource}" target="_blank">${meal.strMeal}</a>`;
+                    foodList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.innerHTML = 'No food found based on the weather condition.';
+                foodList.appendChild(li);
+            }
+        }
+
+        // Fetch music, movie, and food suggestions based on weather conditions (e.g., "rain", "sunny", etc.)
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const weatherCondition = urlParams.get('weatherCondition') || 'sunny'; // Default to sunny
             fetchMusic(weatherCondition);
             fetchMovies(weatherCondition);
+            fetchFood(weatherCondition);
         };
     </script>
 </body>

@@ -6,22 +6,35 @@
     <title>Weather Results</title>
     <link rel="stylesheet" href="style.css">
     <style>
+       body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('weather.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+    } 
     </style>
 </head>
 <body>
     <button onclick="goBack()" style="
-    font-size: 1.2rem; 
+     font-size: 1.2rem; 
     padding: 10px 20px; 
     margin: 20px; 
     border: none; 
-    border-radius: 8px; 
-    background-color: #2d2e2f; 
+    border-radius: 10px; 
+    background-color: #8b48d7; 
     color: white; 
     cursor: pointer;
-    box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
-    ">
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+"
+onmouseover="this.style.backgroundColor='#8d4edc'; this.style.transform='scale(1.05)'"
+onmouseout="this.style.backgroundColor='#a56fe7'; this.style.transform='scale(1)'">
     ← Back
-    </button>
+</button>
+
+
 
     <h1>Weather Details</h1>
     <div id="weather-info"></div>
@@ -35,14 +48,18 @@
     padding: 10px 20px; 
     margin: 20px; 
     border: none; 
-    border-radius: 8px; 
-    background-color: #2d2e2f; 
+    border-radius: 10px; 
+    background-color: #8b48d7; 
     color: white; 
     cursor: pointer;
-    box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
-    ">
-    View Music and Movie Suggestions
-    </button>
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+"
+onmouseover="this.style.backgroundColor='#8d4edc'; this.style.transform='scale(1.05)'"
+onmouseout="this.style.backgroundColor='#a56fe7'; this.style.transform='scale(1)'">
+    View Suggestions
+</button>
+
 
     <script>
         const apiKey = '8a3aafa5bcc20123b98baae6d42fc473'; // Replace with your OpenWeatherMap API key
